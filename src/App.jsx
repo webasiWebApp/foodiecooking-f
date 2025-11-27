@@ -1,34 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Pages
+import Home from './components/Pages/Home.jsx'
+import Post from './components/Post/Post.jsx';
+import AdminLogin from './components/Admin/AdminLogin.jsx';
+import AdminDashboard from './components/Admin/AdminDashboard.jsx';
+import ProtectedRoute from './components/Admin/ProtectedRoute.jsx';
+import PostList from './components/Admin/PostList.jsx';
+import PostForm from './components/Admin/PostForm.jsx';
 
 function App() {
-  const [count, setCount] = useState(0)
+  
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/post" element={<Post/>} />
+        <Route path="/admin" element={<AdminLogin />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/admin/dashboard" element={<AdminDashboard />}>
+            <Route index element={<PostList />} />
+            <Route path="new" element={<PostForm />} />
+            <Route path="edit/:postId" element={<PostForm />} />
+          </Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
