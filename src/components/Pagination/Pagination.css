@@ -31,9 +31,9 @@
 }
 
 .pagination-item.active .pagination-link {
-  background-color: #080117;
+  background-color: #d35a3c;
   color: white;
-  border-color: #000000;
+  border-color: #d35a3c;
 }
 
 .pagination-item.disabled .pagination-link {

@@ -20,25 +20,25 @@ export default function PostGrid({posts,heading,postperpage=8}) {
 
   return (
     <>
-      <Box className='container' px="50px" py={8}>
+      <Box className='container' px="100px" py={16}>
         <VStack align="flex-start" spacing={2} mb={6}>
-          <Heading as="h3" size="md">
+          <Heading as="h3" size="md" textTransform={"uppercase"}>
             {heading}
           </Heading>
-          <Divider borderColor="green.800" borderWidth="1px" width="90%" />
+          <Divider borderColor="#d35a3c" borderWidth="1px" width="90%" />
         </VStack>
         <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={10}>
           {currentPosts.map((item) => (
             <PostCard
               key={item.id}
               id={item.id}
-              imageSrc={item.image}
+              imageSrc={item.images}
               difficulty={item.difficulty}
               rating={item.rating}
               duration={`${item.time} min`}
               postedTime={item.posted}
               title={item.title}
-              description={item.description}
+              description={item.summary}
             />
           ))}
         </SimpleGrid>

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Pages
 import Home from './components/Pages/Home.jsx'
+import About from './components/Pages/About.jsx'
 import Post from './components/Post/Post.jsx';
 import AdminLogin from './components/Admin/AdminLogin.jsx';
 import AdminDashboard from './components/Admin/AdminDashboard.jsx';
@@ -17,6 +18,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
         <Route path="/post" element={<Post/>} />
         <Route path="/admin" element={<AdminLogin />} />
         <Route element={<ProtectedRoute />}>

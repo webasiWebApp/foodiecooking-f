@@ -13,7 +13,7 @@ import {
   
   import { FiClock, FiStar } from "react-icons/fi";
   import { MdWhatshot } from "react-icons/md";
-  import { Link } from "react-router-dom";
+  import { Link, useNavigate } from "react-router-dom";
   
   const PostCardH = ({
     id,
@@ -25,8 +25,16 @@ import {
     title,
     description,
   }) => {
+    const navigate = useNavigate();
+
+    const handleViewMore = (e) => {
+      e.preventDefault();
+      navigate(`/post?id=${id}`);
+    };
+
+    console.log('PostCardH description:', imageSrc, title, description);
     return (
-      <Link to={`/post/${id}`}>
+      <Link to={`/post?id=${id}`}>
       <Card maxW="xl" overflow="hidden" flexDirection="row" position="relative">
   
         {/* Image with overlays */}
@@ -35,7 +43,7 @@ import {
             objectFit="cover"
             maxHeight="200px"
             w="100%"
-            src={imageSrc}
+            src={imageSrc && imageSrc[0] ? imageSrc[0] : imageSrc || 'https://via.placeholder.com/300'}
             alt="Caffe Latte"
           />
   
@@ -87,9 +95,9 @@ import {
         <CardBody justify="flex-start">
           <Heading size="md">{title}</Heading>
           <Text pt="2">
-          {description.length > 100 ? `${description.slice(0, 100)}...` : description}
+          {description && description.length > 100 ? `${description.slice(0, 100)}...` : description || ''}
           </Text>
-          <Button variant="ghost" colorScheme="blue">View More</Button>
+          <Button variant="ghost" colorScheme="orange" onClick={handleViewMore}>View More</Button>
         </CardBody>
   
        

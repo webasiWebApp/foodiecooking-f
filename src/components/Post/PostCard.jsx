@@ -1,7 +1,10 @@
 import { Button, Card, Image, Text, Badge, Box, VStack, CardBody, CardFooter, Heading } from "@chakra-ui/react";
 import { FiClock, FiStar } from "react-icons/fi";
 import { MdWhatshot } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+const CARD_WIDTH = "sm";
+const CARD_HEIGHT = "450px";
 
 const PostCard = ({
   id,
@@ -13,14 +16,22 @@ const PostCard = ({
   title,
   description,
 }) => {
+  const navigate = useNavigate();
+
+  const handleViewMore = (e) => {
+    e.preventDefault();
+    navigate(`/post?id=${id}`);
+  };
+
+  console.log('PostCard description:', imageSrc, title, description);
   return (
-    <Link to={`/post/${id}`}>
-    <Card maxW="sm" overflow="hidden" position="relative">
+    <Link to={`/post?id=${id}`}>
+    <Card maxW={CARD_WIDTH} minHeight={CARD_HEIGHT} overflow="hidden" position="relative">
 
       {/* Image with badges on top */}
       <Box position="relative">
         <Image
-          src={imageSrc}
+          src={imageSrc && imageSrc[0] ? imageSrc[0] : imageSrc || 'https://via.placeholder.com/300'}
           alt={title}
           maxHeight="300px"
         />
@@ -71,12 +82,12 @@ const PostCard = ({
       <CardBody>
         <Heading size="md">{title}</Heading>
         <Text pt="2">
-          {description.length > 100 ? `${description.slice(0, 100)}...` : description}
+          {description && description.length > 100 ? `${description.slice(0, 100)}...` : description || ''}
         </Text>
       </CardBody>
 
       <CardFooter>
-        <Button variant="ghost" colorScheme="blue">View More</Button>
+        <Button variant="ghost" colorScheme="orange" onClick={handleViewMore}>View More</Button>
       </CardFooter>
     </Card>
     </Link>

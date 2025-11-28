@@ -3,27 +3,27 @@ import React, { useState } from 'react';
 const HeroCarousel = () => {
   const destinations = [
     {
-      name: 'Scotland',
-      description: 'Experience the mystical Highlands under twilight skies and misty lochs.',
-      image: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      name: 'Chicken Pot Pie Casserole',
+      description: '"This chicken pot pie recipe takes a little time, but it is WELL WORTH IT!! This is an all-time favorite in our family. Great on a cold winter day.',
+      image: 'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       link: 'https://github.com/MDJAmin'
     },
     {
-      name: 'Norway',
-      description: 'Chase the Northern Lights under star-lit skies along scenic fjord roads.',
-      image: 'https://images.unsplash.com/photo-1439792675105-701e6a4ab6f0?q=80&w=1173&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      name: 'Ground Beef and Potato Casserole',
+      description: 'Wow! This dish is like a combination of scalloped potatoes and shepherds pie! Its so delicious and definitely comforting. This was awesome and very versatile.',
+      image: 'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       link: 'https://github.com/MDJAmin'
     },
     {
-      name: 'New Zealand',
-      description: 'Wander dramatic, mist-laden mountain paths that feel straight out of a dream.',
-      image: 'https://images.unsplash.com/photo-1483982258113-b72862e6cff6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      name: 'Arayes – Lebanese Meat-Stuffed Crispy Pita',
+      description: 'Meet my latest obsession – Arayes! Pita pockets stuffed with seasoned meat kofta filling, then pan fried until crispy. ',
+      image: 'https://images.unsplash.com/photo-1432139555190-58524dae6a55?q=80&w=1176&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       link: 'https://github.com/MDJAmin'
     },
     {
-      name: 'Japan',
-      description: 'Discover serene mountain temples shrouded in dusk and ancient forest trails.',
-      image: 'https://images.unsplash.com/photo-1477346611705-65d1883cee1e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      name: 'Holiday Stuffed Sweet Potato – with bacon, pecans & sage',
+      description: 'Stuffed sweet potato with holiday vibes! Baked sweet potatoes stuffed with crispy bacon, toasty pecans and swirls of browned buttered sage.',
+      image: 'https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzR8fGZvb2R8ZW58MHwwfDB8fHwy',
       link: 'https://github.com/MDJAmin'
     }
   ];
@@ -46,7 +46,7 @@ const HeroCarousel = () => {
       top: '50%',
       transform: 'translate(0, -50%)',
       borderRadius: '20px',
-      boxShadow: '0 30px 50px #505050',
+      boxShadow: '0 30px 50px #505050ff',
       backgroundPosition: '50% 50%',
       backgroundSize: 'cover',
       display: 'inline-block',
@@ -115,39 +115,42 @@ const HeroCarousel = () => {
                   position: 'absolute',
                   top: '50%',
                   left: '10%',
-                  width: '300px',
+                  width: '40%',
                   textAlign: 'left',
-                  color: '#eee',
+                  color: '#000000ff',
                   transform: 'translate(0, -50%)',
                   fontFamily: 'system-ui'
                 }}>
                   <div className="name" style={{
-                    fontSize: '40px',
+                    fontSize: '50px',
                     textTransform: 'uppercase',
                     fontWeight: 'bold',
-                    opacity: 0
+                    opacity: 0,
+                    color:"#d35a3c"
                   }}>
                     {item.name}
                   </div>
                   <div className="des" style={{
                     marginTop: '10px',
                     marginBottom: '20px',
-                    opacity: 0
+                    opacity: 0,
+                    color:"#5c1605ff"
                   }}>
                     {item.description}
                   </div>
                   <a href={item.link} target="_blank" rel="noopener noreferrer">
                     <button style={{
-                      padding: '10px 20px',
+                      padding: '10px 50px',
                       border: 'none',
+                      color: 'white',
                       cursor: 'pointer',
                       opacity: 0,
-                      borderRadius: '10px',
-                      backgroundColor: 'rgba(255, 255, 255, 0.673)',
+                      borderRadius: '3px',
+                      backgroundColor: '#d35a3c',
                       transition: 'all 0.5s'
                     }}
                     onMouseEnter={(e) => e.target.style.backgroundColor = 'rgb(255, 255, 255)'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.673)'}
+                    onMouseLeave={(e) => e.target.style.backgroundColor = '#d35a3c'}
                     >
                       See More
                     </button>
@@ -178,7 +181,7 @@ const HeroCarousel = () => {
             cursor: 'pointer',
             margin: '0 5px',
             transition: '0.3s',
-            background: 'rgba(0, 0, 0, 0.578)',
+            background: 'rgba(77, 40, 4, 0.58)',
             color: 'white',
             padding: '0 3px 0 0'
           }}
@@ -205,7 +208,7 @@ const HeroCarousel = () => {
             cursor: 'pointer',
             margin: '0 5px',
             transition: '0.3s',
-            background: 'rgba(0, 0, 0, 0.578)',
+            background: 'rgba(77, 40, 4, 0.58)',
             color: 'white',
             padding: '0 0 0 3px'
           }}
@@ -215,7 +218,7 @@ const HeroCarousel = () => {
             e.target.style.transform = 'scale(1.1)';
           }}
           onMouseLeave={(e) => {
-            e.target.style.background = 'rgba(0, 0, 0, 0.578)';
+            e.target.style.background = 'rgba(77, 40, 4, 0.58)';
             e.target.style.color = 'white';
             e.target.style.transform = 'scale(1)';
           }}

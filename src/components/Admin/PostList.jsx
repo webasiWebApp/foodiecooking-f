@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { posts as initialPosts } from '../../Api/Api';
+import { getPosts } from '../../Api/Api';
 import {
   Box,
   Button,
@@ -20,10 +20,20 @@ import {
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // In a real app, you would fetch this from an API
-    setPosts(initialPosts);
+    const fetchPosts = async () => {
+      try {
+        const data = await getPosts();
+        setPosts(data);
+      } catch (error) {
+        console.error('Failed to fetch posts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPosts();
   }, []);
 
   const handleDelete = (postId) => {
@@ -35,6 +45,10 @@ const PostList = () => {
   };
 
   const tableBg = useColorModeValue('white', 'gray.700');
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Box>

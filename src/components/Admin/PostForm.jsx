@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { posts as initialPosts } from '../../Api/Api';
+import { getPosts } from '../../Api/Api';
 import {
   Box,
   Button,
@@ -28,17 +28,29 @@ const PostForm = () => {
     ingredients: '',
     article: '',
   });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (postId) {
-      const existingPost = initialPosts.find((p) => p.id === parseInt(postId));
-      if (existingPost) {
-        setPost({
-          ...existingPost,
-          summary: existingPost.description || '',
-          images: existingPost.image ? [existingPost.image] : [''],
-        });
-      }
+      const fetchPost = async () => {
+        setLoading(true);
+        try {
+          const posts = await getPosts();
+          const existingPost = posts.find((p) => p.id === parseInt(postId));
+          if (existingPost) {
+            setPost({
+              ...existingPost,
+              summary: existingPost.description || '',
+              images: existingPost.image ? [existingPost.image] : [''],
+            });
+          }
+        } catch (error) {
+          console.error('Failed to fetch post:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchPost();
     }
   }, [postId]);
 
@@ -67,6 +79,10 @@ const PostForm = () => {
   };
 
   const formBg = useColorModeValue('white', 'gray.700');
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Box bg={formBg} p={8} rounded="lg" boxShadow="lg">

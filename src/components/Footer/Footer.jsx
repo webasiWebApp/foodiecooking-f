@@ -31,7 +31,7 @@ const footerData = [
 
 const Footer = () => {
   return (
-    <Container maxW="7xl" p={{ base: 5, md: 10 }}>
+    <Container maxW="7xl" p={{ base: 5, md: 10 }} borderTop="2px solid #d35a3c" mt={10}>
       <VStack spacing={8} alignItems="initial">
         <Flex
           flexWrap="wrap"
@@ -57,7 +57,7 @@ const Footer = () => {
                     fontSize="md"
                     href={link.href}
                     color="gray.600"
-                    _hover={{ color: 'blue.600', textDecoration: 'underline' }}
+                    _hover={{ color: 'orange.600', textDecoration: 'underline' }}
                   >
                     {link.label}
                   </Link>
@@ -105,7 +105,7 @@ const Footer = () => {
             <Link 
               href="https://webasi.co" 
               isExternal 
-              color="blue.600"
+              color="orange.600"
               _hover={{ textDecoration: 'underline' }}
             >
               WEBASI
