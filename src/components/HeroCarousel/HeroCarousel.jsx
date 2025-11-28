@@ -1,34 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const HeroCarousel = () => {
-  const destinations = [
-    {
-      name: 'Chicken Pot Pie Casserole',
-      description: '"This chicken pot pie recipe takes a little time, but it is WELL WORTH IT!! This is an all-time favorite in our family. Great on a cold winter day.',
-      image: 'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      link: 'https://github.com/MDJAmin'
-    },
-    {
-      name: 'Ground Beef and Potato Casserole',
-      description: 'Wow! This dish is like a combination of scalloped potatoes and shepherds pie! Its so delicious and definitely comforting. This was awesome and very versatile.',
-      image: 'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      link: 'https://github.com/MDJAmin'
-    },
-    {
-      name: 'Arayes – Lebanese Meat-Stuffed Crispy Pita',
-      description: 'Meet my latest obsession – Arayes! Pita pockets stuffed with seasoned meat kofta filling, then pan fried until crispy. ',
-      image: 'https://images.unsplash.com/photo-1432139555190-58524dae6a55?q=80&w=1176&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      link: 'https://github.com/MDJAmin'
-    },
-    {
-      name: 'Holiday Stuffed Sweet Potato – with bacon, pecans & sage',
-      description: 'Stuffed sweet potato with holiday vibes! Baked sweet potatoes stuffed with crispy bacon, toasty pecans and swirls of browned buttered sage.',
-      image: 'https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzR8fGZvb2R8ZW58MHwwfDB8fHwy',
-      link: 'https://github.com/MDJAmin'
+const HeroCarousel = ({ posts }) => {
+  const navigate = useNavigate();
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    if (posts && posts.length > 0) {
+      // Get the latest 4 posts
+      const latestPosts = posts.slice(0, 4).map(post => ({
+        id: post.id,
+        name: post.title || 'Untitled Recipe',
+        description: post.summary || post.description || 'No description available',
+        image: (post.images && post.images[0]) || (post.image && post.image[0]) || post.image || 'https://via.placeholder.com/800x600?text=No+Image',
+        link: `/post?id=${post.id}`
+      }));
+      setItems(latestPosts);
     }
-  ];
-
-  const [items, setItems] = useState(destinations);
+  }, [posts]);
 
   const handleNext = () => {
     setItems(prev => [...prev.slice(1), prev[0]]);
@@ -39,9 +28,11 @@ const HeroCarousel = () => {
   };
 
   const getItemStyle = (index) => {
+    const isMobile = window.innerWidth <= 768;
+    
     const styles = {
-      width: '200px',
-      height: '250px',
+      width: isMobile ? '150px' : '200px',
+      height: isMobile ? '200px' : '250px',
       position: 'absolute',
       top: '50%',
       transform: 'translate(0, -50%)',
@@ -51,7 +42,7 @@ const HeroCarousel = () => {
       backgroundSize: 'cover',
       display: 'inline-block',
       transition: 'all 0.5s',
-      backgroundImage: `url('${items[index].image}')`
+      backgroundImage: `url('${items[index]?.image}')`
     };
 
     if (index === 0 || index === 1) {
@@ -65,9 +56,17 @@ const HeroCarousel = () => {
         borderRadius: '0px'
       };
     } else if (index === 2) {
-      return { ...styles, left: '70%' };
+      return { 
+        ...styles, 
+        left: isMobile ? '60%' : '70%',
+        display: isMobile ? 'none' : 'inline-block'
+      };
     } else if (index === 3) {
-      return { ...styles, left: 'calc(70% + 220px)' };
+      return { 
+        ...styles, 
+        left: isMobile ? 'calc(60% + 170px)' : 'calc(70% + 220px)',
+        display: isMobile ? 'none' : 'inline-block'
+      };
     } else {
       return { ...styles, left: 'calc(70% + 440px)', opacity: 0 };
     }
@@ -81,6 +80,7 @@ const HeroCarousel = () => {
       overflow: 'hidden',
       width: '100vw',
       height: '100vh',
+      minHeight: '500px',
       position: 'relative'
     }}>
       <style>{`
@@ -105,13 +105,43 @@ const HeroCarousel = () => {
         .content-animate button {
           animation: animate 1s ease-in-out 0.6s 1 forwards;
         }
+
+        @media (max-width: 768px) {
+          .hero-content {
+            left: 5% !important;
+            width: 90% !important;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+          }
+          .hero-title {
+            font-size: 28px !important;
+          }
+          .hero-description {
+            font-size: 14px !important;
+          }
+          .hero-button {
+            padding: 8px 30px !important;
+            font-size: 14px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hero-title {
+            font-size: 22px !important;
+          }
+          .hero-description {
+            font-size: 12px !important;
+          }
+        }
       `}</style>
 
-      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+      {items.length > 0 && (
+        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
           {items.map((item, index) => (
-            <div key={item.name} style={getItemStyle(index)}>
+            <div key={item.id} style={getItemStyle(index)}>
               {index === 1 && (
-                <div className="content-animate" style={{
+                <div className="content-animate hero-content" style={{
                   position: 'absolute',
                   top: '50%',
                   left: '10%',
@@ -121,7 +151,7 @@ const HeroCarousel = () => {
                   transform: 'translate(0, -50%)',
                   fontFamily: 'system-ui'
                 }}>
-                  <div className="name" style={{
+                  <div className="name hero-title" style={{
                     fontSize: '50px',
                     textTransform: 'uppercase',
                     fontWeight: 'bold',
@@ -130,36 +160,35 @@ const HeroCarousel = () => {
                   }}>
                     {item.name}
                   </div>
-                  <div className="des" style={{
+                  <div className="des hero-description" style={{
                     marginTop: '10px',
                     marginBottom: '20px',
                     opacity: 0,
-                    color:"#5c1605ff"
+                    color:"#ffffffff"
                   }}>
                     {item.description}
                   </div>
-                  <a href={item.link} target="_blank" rel="noopener noreferrer">
-                    <button style={{
-                      padding: '10px 50px',
-                      border: 'none',
-                      color: 'white',
-                      cursor: 'pointer',
-                      opacity: 0,
-                      borderRadius: '3px',
-                      backgroundColor: '#d35a3c',
-                      transition: 'all 0.5s'
+                  <button onClick={() => navigate(item.link)} className="hero-button" style={{
+                    padding: '10px 50px',
+                    border: 'none',
+                    color: 'white',
+                    cursor: 'pointer',
+                    opacity: 0,
+                    borderRadius: '3px',
+                    backgroundColor: '#d35a3c',
+                    transition: 'all 0.5s'
                     }}
                     onMouseEnter={(e) => e.target.style.backgroundColor = 'rgb(255, 255, 255)'}
                     onMouseLeave={(e) => e.target.style.backgroundColor = '#d35a3c'}
                     >
                       See More
                     </button>
-                  </a>
                 </div>
               )}
             </div>
           ))}
         </div>
+      )}
 
         <div style={{
           display: 'flex',

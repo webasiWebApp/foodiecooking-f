@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Box, Heading, Image, VStack, Divider, Grid, GridItem, Flex, IconButton } from "@chakra-ui/react";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
-import { getPosts } from '../../Api/Api.js';
 import PostCard from '../Post/PostCard';
 
 // Simple carousel implementation since react-multi-carousel isn't available
@@ -75,10 +75,10 @@ const TrendingPost = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const data = await getPosts();
-                setPosts(data);
+                const response = await axios.get('/api/recipes/top-rated');
+                setPosts(response.data);
             } catch (error) {
-                console.error('Failed to fetch posts:', error);
+                console.error('Failed to fetch top-rated posts:', error);
             } finally {
                 setLoading(false);
             }
@@ -91,7 +91,7 @@ const TrendingPost = () => {
     }
 
     return (
-        <Box className='container' px={{ base: "20px", md: "100px" }} py={16}>
+        <Box className='container' px={{ base: "10px", md: "200px" }} py={16}>
             <VStack align="flex-start" spacing={2} mb={6}>
                 <Heading as="h3" size="md" textTransform={"uppercase"}>
                     Trending Post

@@ -159,25 +159,25 @@ const Post = () => {
 
   return (
     <><Navigation/>
-    <Box maxW="80%" mx="auto" py={10} px={4} >
+    <Box maxW={{ base: "95%", md: "90%", lg: "80%" }} mx="auto" py={{ base: 6, md: 8, lg: 10 }} px={{ base: 2, md: 4 }} >
 
       {/* SECTION 1 — Gallery Slider + Right Info */}
-      <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={6} mt={'100px'}>
+      <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={{ base: 4, md: 6 }} mt={{ base: '80px', md: '100px' }}>
           <GridItem>
 
         {/* Main Image + Thumbnails using Swiper */}
-        <Box w={"90%"} overflow={"hidden"}>
+        <Box w={{ base: "100%", md: "90%" }} overflow={"hidden"}>
           {/* MAIN SLIDER */}
           <Swiper
             loop={true}
             spaceBetween={10}
             thumbs={{ swiper: thumbsSwiper }}
             modules={[FreeMode, Thumbs]}
-            style={{ width:"500px", height:"350px" }}
+            style={{ width: "100%", height: "auto", maxHeight: "350px" }}
           >
             {carouselImages.map((img,i)=>(
               <SwiperSlide key={i}>
-                <Image src={img} objectFit="cover" w="100%" h="350px" borderRadius="md"/>
+                <Image src={img} objectFit="cover" w="100%" h={{ base: "250px", md: "350px" }} borderRadius="md"/>
               </SwiperSlide>
             ))}
           </Swiper>
@@ -186,15 +186,23 @@ const Post = () => {
           <Swiper
             onSwiper={setThumbsSwiper}
             spaceBetween={10}
-            slidesPerView={5}
+            slidesPerView={4}
             freeMode={true}
             watchSlidesProgress
             modules={[FreeMode, Thumbs]}
             style={{ marginTop:"10px" }}
+            breakpoints={{
+              480: {
+                slidesPerView: 4,
+              },
+              768: {
+                slidesPerView: 5,
+              }
+            }}
           >
             {carouselImages.map((img,i)=>(
               <SwiperSlide key={i}>
-                <Image src={img} objectFit="cover" borderRadius="md" h="60px" cursor="pointer" border="2px solid #ccc"/>
+                <Image src={img} objectFit="cover" borderRadius="md" h={{ base: "50px", md: "60px" }} cursor="pointer" border="2px solid #ccc"/>
               </SwiperSlide>
             ))}
           </Swiper>
@@ -204,32 +212,32 @@ const Post = () => {
 
         <GridItem>
         {/* Right Section */}
-        <VStack align="start" spacing={4}>
-          <Heading>{postData.title || 'Recipe Title'}</Heading>
-          <Text color="gray.600">
+        <VStack align="start" spacing={{ base: 3, md: 4 }}>
+          <Heading size={{ base: "lg", md: "xl" }}>{postData.title || 'Recipe Title'}</Heading>
+          <Text color="gray.600" fontSize={{ base: "sm", md: "md" }}>
             {postData.summary || postData.description || 'A short description of the recipe, summary & purpose.'}
           </Text>
 
-          <HStack>
-            <Badge colorScheme="green">{postData.time || 5} min</Badge>
-            <Badge colorScheme={postData.difficulty === "Hard" ? "red" : postData.difficulty === "Medium" ? "orange" : "green"}>
+          <HStack flexWrap="wrap" spacing={{ base: 2, md: 3 }}>
+            <Badge colorScheme="green" fontSize={{ base: "xs", md: "sm" }}>{postData.time || 5} min</Badge>
+            <Badge colorScheme={postData.difficulty === "Hard" ? "red" : postData.difficulty === "Medium" ? "orange" : "green"} fontSize={{ base: "xs", md: "sm" }}>
               {postData.difficulty || 'Easy'}
             </Badge>
-            <Badge colorScheme="yellow">⭐ {postData.rating || 4.3}</Badge>
-            <Badge colorScheme="purple">Posted • {postData.posted || '5 days ago'}</Badge>
+            <Badge colorScheme="yellow" fontSize={{ base: "xs", md: "sm" }}>⭐ {postData.rating || 4.3}</Badge>
+            <Badge colorScheme="purple" fontSize={{ base: "xs", md: "sm" }}>Posted • {postData.posted || '5 days ago'}</Badge>
           </HStack>
 
-          <Heading size="md" mt={3}>Ingredients</Heading>
+          <Heading size={{ base: "sm", md: "md" }} mt={3}>Ingredients</Heading>
           {postData.ingredients && typeof postData.ingredients === 'string' ? (
-            <Text>{postData.ingredients}</Text>
+            <Text fontSize={{ base: "sm", md: "md" }}>{postData.ingredients}</Text>
           ) : postData.ingredients && Array.isArray(postData.ingredients) ? (
             postData.ingredients.map((ing, i) => (
-              <Text key={i}>{ing.name}: {ing.quantity}</Text>
+              <Text key={i} fontSize={{ base: "sm", md: "md" }}>{ing.name}: {ing.quantity}</Text>
             ))
           ) : (
             <>
-              <Text>Chilli: 250g</Text>
-              <Text>Sugar: 100g</Text>
+              <Text fontSize={{ base: "sm", md: "md" }}>Chilli: 250g</Text>
+              <Text fontSize={{ base: "sm", md: "md" }}>Sugar: 100g</Text>
             </>
           )}
         </VStack>
@@ -238,22 +246,22 @@ const Post = () => {
       </Grid>
 
       {/* SECTION 2 — Recipe Content */}
-      <Box mt={14}>
+      <Box mt={{ base: 8, md: 10, lg: 14 }}>
        
-        <Text textAlign="center" color="gray.600" maxW="850px" mx="auto">
-          {postData.article || "'Tis the season for baking batch after batch of Christmas cookies."}
+        <Text textAlign="center" color="gray.600" maxW="850px" mx="auto" fontSize={{ base: "sm", md: "md" }} px={{ base: 2, md: 0 }}>
+          {postData.recipeArticle || "'Tis the season for baking batch after batch of Christmas cookies."}
         </Text>
 
         {postData.images && postData.images[0] && (
-          <Image src={postData.images[0]} my={5} borderRadius="md"/>
+          <Image src={postData.images[0]} my={{ base: 3, md: 5 }} borderRadius="md"/>
         )}
       </Box>
 
       {/* SECTION 3 — Similar Posts */}
-      <Box mt={16}>
-        <Heading  size="lg">Similar Posts</Heading>
+      <Box mt={{ base: 10, md: 12, lg: 16 }} px={{ base: 2, md: 0 }}>
+        <Heading size={{ base: "md", md: "lg" }}>Similar Posts</Heading>
         <Divider mt="3" mb="6" borderColor="#d35a3c65" borderWidth="1px" width="90%" />
-        <SimpleGrid columns={{ base:1, sm:2, md:4 }} spacing={6}>
+        <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing={{ base: 4, md: 6 }}>
           {similarPosts.map(item=>(
             <PostCard
               key={item.id}
@@ -271,56 +279,58 @@ const Post = () => {
       </Box>
 
       {/* SECTION 4 — Reviews */}
-      <Box mt={16}>
-        <Flex justify="space-between" align="center">
-          <Heading size="lg" >Reviews</Heading>
-          <Button colorScheme="orange" onClick={onOpen}>Write Review</Button>
+      <Box mt={{ base: 10, md: 12, lg: 16 }} px={{ base: 2, md: 0 }}>
+        <Flex justify="space-between" align="center" flexDirection={{ base: "column", sm: "row" }} gap={{ base: 3, sm: 0 }}>
+          <Heading size={{ base: "md", md: "lg" }}>Reviews</Heading>
+          <Button colorScheme="orange" onClick={onOpen} size={{ base: "sm", md: "md" }}>Write Review</Button>
          
         </Flex>
 
         <Divider my={4}/>
 
         {postData.reviews.map((r,i)=>(
-          <Box key={i} p={4} border="1px solid #ddd" rounded="md" mb={3}>
-            <Text fontWeight="bold">{r.authername} <br/>  <Badge colorScheme="yellow">⭐ {r.rating || 4.3}</Badge></Text>
-            <Text color="gray.500" fontSize="sm">{r.authermail}</Text>
-            <Text mt={1}>{r.review}</Text>
+          <Box key={i} p={{ base: 3, md: 4 }} border="1px solid #ddd" rounded="md" mb={3}>
+            <Text fontWeight="bold" fontSize={{ base: "sm", md: "md" }}>{r.authername} <br/>  <Badge colorScheme="yellow" fontSize={{ base: "xs", md: "sm" }}>⭐ {r.rating || 4.3}</Badge></Text>
+            <Text color="gray.500" fontSize={{ base: "xs", md: "sm" }}>{r.authermail}</Text>
+            <Text mt={1} fontSize={{ base: "sm", md: "md" }}>{r.review}</Text>
             {r.image && <img src={r.image} alt="Review Image" style={{ maxWidth: '100px', borderRadius: '3px', marginTop: '8px' }} />}
           </Box>
         ))}
       </Box>
 
       {/* MODAL — ADD REVIEW */}
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size={{ base: "full", md: "md" }}>
         <ModalOverlay/>
-        <ModalContent p={4}>
-          <ModalHeader>Write a Review</ModalHeader>
+        <ModalContent p={{ base: 2, md: 4 }} mx={{ base: 2, md: 0 }}>
+          <ModalHeader fontSize={{ base: "lg", md: "xl" }}>Write a Review</ModalHeader>
           <ModalCloseButton/>
           <ModalBody>
             <FormControl mt={3} isRequired>
-              <FormLabel>Name</FormLabel>
+              <FormLabel fontSize={{ base: "sm", md: "md" }}>Name</FormLabel>
               <Input 
                 name="authername"
                 value={reviewForm.authername}
                 onChange={handleReviewChange}
                 placeholder="Your Name"
+                size={{ base: "sm", md: "md" }}
               />
             </FormControl>
 
             <FormControl mt={3} isRequired>
-              <FormLabel>Email</FormLabel>
+              <FormLabel fontSize={{ base: "sm", md: "md" }}>Email</FormLabel>
               <Input 
                 name="authermail"
                 type="email"
                 value={reviewForm.authermail}
                 onChange={handleReviewChange}
                 placeholder="Your Email"
+                size={{ base: "sm", md: "md" }}
               />
             </FormControl>
 
             <FormControl mt={3} isRequired>
-              <FormLabel>Rating</FormLabel>
-              <HStack spacing={1}>
+              <FormLabel fontSize={{ base: "sm", md: "md" }}>Rating</FormLabel>
+              <HStack spacing={{ base: 1, md: 2 }}>
                 {[1, 2, 3, 4, 5].map((star) => (
                   <Box
                     key={star}
@@ -332,7 +342,7 @@ const Post = () => {
                     _hover={{ transform: 'scale(1.1)' }}
                   >
                     <Star
-                      size={32}
+                      size={window.innerWidth < 768 ? 24 : 32}
                       fill={star <= reviewForm.rating ? '#f59e0b' : 'none'}
                       stroke={star <= reviewForm.rating ? '#f59e0b' : '#d1d5db'}
                       strokeWidth={2}
@@ -341,29 +351,31 @@ const Post = () => {
                 ))}
               </HStack>
               {reviewForm.rating > 0 && (
-                <Text fontSize="sm" color="gray.600" mt={2}>
+                <Text fontSize={{ base: "xs", md: "sm" }} color="gray.600" mt={2}>
                   You rated: {reviewForm.rating} star{reviewForm.rating > 1 ? 's' : ''}
                 </Text>
               )}
             </FormControl>
 
             <FormControl mt={3} isRequired>
-              <FormLabel>Review</FormLabel>
+              <FormLabel fontSize={{ base: "sm", md: "md" }}>Review</FormLabel>
               <Textarea 
                 name="review"
                 rows={4}
                 value={reviewForm.review}
                 onChange={handleReviewChange}
                 placeholder="Write your review..."
+                size={{ base: "sm", md: "md" }}
               />
             </FormControl>
 
             <FormControl mt={3}>
-              <FormLabel>Upload Photo</FormLabel>
+              <FormLabel fontSize={{ base: "sm", md: "md" }}>Upload Photo</FormLabel>
               <Input 
                 type="file" 
                 accept="image/*"
                 onChange={handleImageUpload}
+                size={{ base: "sm", md: "md" }}
               />
             </FormControl>
 
@@ -374,6 +386,7 @@ const Post = () => {
               onClick={handleSubmitReview}
               isLoading={submitting}
               loadingText="Submitting..."
+              size={{ base: "sm", md: "md" }}
             >
               Submit Review
             </Button>

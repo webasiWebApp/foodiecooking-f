@@ -5,26 +5,26 @@ const footerData = [
   {
     label: 'Navigation',
     links: [
-      { label: 'Home', href: '#' },
-      { label: 'About', href: '#' },
-      { label: 'Contact', href: '#' }
+      { label: 'Home', href: '/' },
+      { label: 'About', href: '/about' },
+      { label: 'Contact', href: '/contact' }
     ]
   },
   {
     label: 'Categories',
     links: [
-      { label: 'College Ramen', href: '#' },
-      { label: 'Healthy', href: '#' },
-      { label: 'Crockpot', href: '#' },
-      { label: 'Frugal', href: '#' },
-      { label: 'Sides', href: '#' }
+      { label: 'College Ramen', href: '/category?category=College Ramen' },
+      { label: 'Healthy', href: '/category?category=Healthy' },
+      { label: 'Crockpot', href: '/category?category=Crockpot' },
+      { label: 'Frugal', href: '/category?category=Frugal' },
+      { label: 'Sides', href: '/category?category=Sides' }
     ]
   },
   {
     label: 'Legal',
     links: [
-      { label: 'Terms and Conditions', href: '#' },
-      { label: 'Privacy Policy', href: '#' }
+      { label: 'Terms and Conditions', href: '/terms-conditions' },
+      { label: 'Privacy Policy', href: '/privacy-policy' }
     ]
   }
 ];

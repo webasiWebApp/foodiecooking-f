@@ -12,14 +12,14 @@ const navigationData = {
       type: 'dropdown',
       label: 'Cetegories',
       items: [
-        { label: 'College Ramen', href: '#' },
-        { label: 'Healthy', href: '#' },
-        { label: 'Crockpot', href: '#' },
-        { label: 'Frugal', href: '#' },
-        { label: 'Sides', href: '#' },
-        { label: 'Tea', href: '#' },
-        { label: 'Smoked', href: '#' },
-        { label: 'Salads', href: '#' }
+        { label: 'College Ramen', href: '/category?category=College Ramen' },
+        { label: 'Healthy', href: '/category?category=Healthy' },
+        { label: 'Crockpot', href: '/category?category=Crockpot' },
+        { label: 'Frugal', href: '/category?category=Frugal' },
+        { label: 'Sides', href: '/category?category=Sides' },
+        { label: 'Tea', href: '/category?category=Tea' },
+        { label: 'Smoked', href: '/category?category=Smoked' },
+        { label: 'Salads', href: '/category?category=Salads' }
       ]
     },
     
@@ -57,6 +57,11 @@ export default function ResponsiveNav() {
           justify-content: space-between;
         }
 
+        .menu-btn {
+          display: none;
+          cursor: pointer;
+          color: #000000;
+        }
 
         .nav-links-wrapper {
           display: inline-flex;
@@ -236,6 +241,10 @@ export default function ResponsiveNav() {
             <a href="/"><img src={logo} alt="logo" style={{width:"100%",height:"70px"}} /></a>
           </div>
           
+          <div className="menu-btn" onClick={() => setMenuOpen(!menuOpen)}>
+            <Menu size={28} />
+          </div>
+
           <ul className="nav-links-wrapper">
             {menuOpen && (
               <li className="close-btn" onClick={() => setMenuOpen(false)}>

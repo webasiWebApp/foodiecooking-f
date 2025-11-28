@@ -5,6 +5,7 @@ import Navigation from '../Navigation/Navigation.jsx';
 import PostGrid from '../PostGrid/PostGrid.jsx';
 import PopularPostGrid from '../PostGrid/PopularPostGrid.jsx';
 import TrendingPost from '../PostGrid/TrendingPost.jsx';
+import EmailSubscription from '../EmailSubscription/EmailSubscription.jsx';
 import Footer from '../Footer/Footer.jsx';
 
 import { getPosts } from '../../Api/Api.js'
@@ -34,10 +35,11 @@ export default function Home() {
     return (
         <>
             <Navigation />
-            <HeroCarousel />
-            <PopularPostGrid posts={post} />
+            <HeroCarousel posts={post}/>
+            <PopularPostGrid />
             <TrendingPost />
             <PostGrid posts={post} heading="Latest Posts" postperpage={4} />
+            <EmailSubscription />
             <Footer />
         </>
     );

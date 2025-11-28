@@ -1,24 +1,36 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import PostCard from '../Post/PostCard';
 import PostCardH from '../Post/PostCardH';
 
 import { Grid, GridItem, Box, VStack ,HStack, Heading, Divider } from "@chakra-ui/react";
 
-export default function PopularPostGrid({posts}){
+export default function PopularPostGrid(){
 
-    const [post,setPost] = useState(posts);
+    const [post, setPost] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        setPost(posts);
-    }, [posts]);
+        const fetchTopPosts = async () => {
+            try {
+                const response = await axios.get('/api/recipes/top');
+                setPost(response.data);
+            } catch (error) {
+                console.error('Failed to fetch top posts:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchTopPosts();
+    }, []);
 
-    if (!post || post.length < 4) {
+    if (loading || !post || post.length < 4) {
         return null; 
     }
 
     return(
 
-        <Box className='container' px="100px" py={16}>
+        <Box className='container' px={{ base: "20px", md: "50px", lg: "100px", xl: "200px" }} py={16}>
             <VStack align="flex-start" spacing={2} mb={6}>
                 <Heading as="h3" size="md" textTransform={"uppercase"}>
                     Popular Post
@@ -30,7 +42,7 @@ export default function PopularPostGrid({posts}){
                 gap={6}
             >
                 <GridItem>
-                    <HStack spacing={6}>
+                    <HStack spacing={{ base: 2, md: 4, lg: 6 }} flexDirection={{ base: "column", sm: "row" }}>
                         <PostCard
                             key={post[0].id}
                             id={post[0].id}
@@ -59,7 +71,7 @@ export default function PopularPostGrid({posts}){
 
                 </GridItem>
                 <GridItem>
-                    <VStack spacing={6}>
+                    <VStack spacing={{ base: 4, md: 6 }}>
                         <PostCardH
                             key={post[2].id}
                             id={post[2].id}

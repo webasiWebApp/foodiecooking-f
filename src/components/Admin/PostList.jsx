@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getPosts } from '../../Api/Api';
+import axios from 'axios';
 import {
   Box,
   Button,
@@ -16,11 +17,14 @@ import {
   Flex,
   Spacer,
   useColorModeValue,
+  useToast,
 } from '@chakra-ui/react';
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(null);
+  const toast = useToast();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -36,11 +40,35 @@ const PostList = () => {
     fetchPosts();
   }, []);
 
-  const handleDelete = (postId) => {
+  const handleDelete = async (postId) => {
     if (window.confirm('Are you sure you want to delete this post?')) {
-      const updatedPosts = posts.filter((post) => post.id !== postId);
-      setPosts(updatedPosts);
-      // In a real app, you'd also send a delete request to your API
+      setDeleting(postId);
+      try {
+        await axios.delete(`/api/recipes/${postId}`);
+        
+        // Remove the deleted post from state
+        const updatedPosts = posts.filter((post) => post.id !== postId);
+        setPosts(updatedPosts);
+        
+        toast({
+          title: 'Post deleted',
+          description: 'The post has been successfully deleted.',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+      } catch (error) {
+        console.error('Failed to delete post:', error);
+        toast({
+          title: 'Error',
+          description: 'Failed to delete the post. Please try again.',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      } finally {
+        setDeleting(null);
+      }
     }
   };
 
@@ -85,7 +113,13 @@ const PostList = () => {
                       Edit
                     </Button>
                   </Link>
-                  <Button size="sm" colorScheme="red" onClick={() => handleDelete(post.id)}>
+                  <Button 
+                    size="sm" 
+                    colorScheme="red" 
+                    onClick={() => handleDelete(post.id)}
+                    isLoading={deleting === post.id}
+                    loadingText="Deleting"
+                  >
                     Delete
                   </Button>
                 </Td>
